@@ -1,5 +1,5 @@
 const getDistanceToScreenBorder = (element) => {
-    if (!element) return [];
+    if (!element || !(element instanceof HTMLElement)) return [];
 
     const { top, left, bottom, right } = element.getBoundingClientRect();
 

@@ -81,7 +81,7 @@ const MyMenu = () => {
                 </Avatar>
             </MenuToggle>
             <FocusLock persistentFocus={true}>
-                <MenuList width="max-content" overflow="auto" maxHeight={menuMaxHeight}>
+                <MenuList data-testid="menu-list" width="max-content" overflow="auto" maxHeight={menuMaxHeight}>
                     <Box>
                         {menuItems.map(({ icon, name }) => (
                             <MenuItem key={name}>
