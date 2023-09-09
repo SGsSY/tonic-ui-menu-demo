@@ -2,11 +2,16 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
-import App from "../src/views/App";
+import { TonicProvider } from "@tonic-ui/react";
+import MyMenu from "../src/components/MyMenu";
 
 test("測試 Menu 元件是否正確渲染", async () => {
     // 渲染你的Tonic UI元件
-    const { getByText, getByTestId } = render(<App />);
+    const { getByText, getByTestId } = render(
+        <TonicProvider>
+            <MyMenu />
+        </TonicProvider>
+    );
 
     // avatar
     const avatar = getByTestId("avatar");
