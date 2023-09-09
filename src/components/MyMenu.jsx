@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     Box,
     Flex,
@@ -11,7 +11,6 @@ import {
     useColorMode,
     useColorStyle,
 } from "@tonic-ui/react";
-import FocusLock from "react-focus-lock";
 import getDistanceToScreenBorder from "../utils/getDistanceToScreenBorder";
 import getRelativePositionOfPoint from "../utils/getRelativePositionOfPoint";
 import Avatar from "./Avatar";
@@ -63,27 +62,38 @@ const MyMenu = () => {
     const [colorMode] = useColorMode();
     const [colorStyle] = useColorStyle({ colorMode });
 
-    const menuDom = document.getElementById("myMenu");
-    const [distanceToTop, distanceToBottom, distanceToLeft, distanceToRight] = getDistanceToScreenBorder(menuDom);
-    const [y, x] = getRelativePositionOfPoint(distanceToTop, distanceToBottom, distanceToLeft, distanceToRight);
-    const menuPlacement = `${y === "bottom" ? "top" : "bottom"}-${x === "left" ? "end" : "start"}`;
-    const menuMaxHeight = Math.max(distanceToTop, distanceToBottom) - 48;
+    const menuRef = useRef(null);
+    const [menuPlacement, setMenuPlacement] = useState("bottom-start");
+    const [menuMaxHeight, setMenuMaxHeight] = useState(undefined);
+
+    useEffect(() => {
+        if (!menuRef.current) return;
+
+        const menuDom = menuRef.current;
+        const [distanceToTop, distanceToBottom, distanceToLeft, distanceToRight] = getDistanceToScreenBorder(menuDom);
+        const [y, x] = getRelativePositionOfPoint(distanceToTop, distanceToBottom, distanceToLeft, distanceToRight);
+        const menuPlacement = `${y === "bottom" ? "top" : "bottom"}-${x === "left" ? "start" : "end"}`;
+        const menuMaxHeight = Math.max(distanceToTop, distanceToBottom) - 48;
+
+        setMenuPlacement(menuPlacement);
+        setMenuMaxHeight(menuMaxHeight);
+    });
 
     return (
-        <Menu id="myMenu" placement={menuPlacement}>
-            <MenuToggle>
-                <Avatar
-                    data-testid="avatar"
-                    backgroundColor={colorStyle.background.secondary}
-                    color={colorStyle.color.secondary}
-                    _hover={{
-                        color: colorStyle.color.primary,
-                    }}
-                >
-                    <Icon icon="user-team" size="5x" />
-                </Avatar>
-            </MenuToggle>
-            <FocusLock persistentFocus={true}>
+        <div>
+            <Menu ref={menuRef} placement={menuPlacement}>
+                <MenuToggle>
+                    <Avatar
+                        data-testid="avatar"
+                        backgroundColor={colorStyle.background.secondary}
+                        color={colorStyle.color.secondary}
+                        _hover={{
+                            color: colorStyle.color.primary,
+                        }}
+                    >
+                        <Icon icon="user-team" size="5x" />
+                    </Avatar>
+                </MenuToggle>
                 <MenuList data-testid="menu-list" width="max-content" overflow="auto" maxHeight={menuMaxHeight}>
                     <Box>
                         {menuItems.map(({ icon, name }) => (
@@ -98,8 +108,8 @@ const MyMenu = () => {
                         ))}
                     </Box>
                 </MenuList>
-            </FocusLock>
-        </Menu>
+            </Menu>
+        </div>
     );
 };
 

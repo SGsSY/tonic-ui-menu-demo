@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { TonicProvider } from "@tonic-ui/react";
 import CenterBlock from "../components/CenterBlock";
 import MyMenu from "../components/MyMenu";
