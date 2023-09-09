@@ -13,6 +13,7 @@ import {
 } from "@tonic-ui/react";
 import FocusLock from "react-focus-lock";
 import getDistanceToScreenBorder from "../utils/getDistanceToScreenBorder";
+import getRelativePositionOfPoint from "../utils/getRelativePositionOfPoint";
 import Avatar from "./Avatar";
 
 const menuItems = [
@@ -63,11 +64,13 @@ const MyMenu = () => {
     const [colorStyle] = useColorStyle({ colorMode });
 
     const menuDom = document.getElementById("myMenu");
-    const [distanceToTop, distanceToBottom] = getDistanceToScreenBorder(menuDom);
-    const menuMaxHeight = Math.min(distanceToTop, distanceToBottom) - 48;
+    const [distanceToTop, distanceToBottom, distanceToLeft, distanceToRight] = getDistanceToScreenBorder(menuDom);
+    const [y, x] = getRelativePositionOfPoint(distanceToTop, distanceToBottom, distanceToLeft, distanceToRight);
+    const menuPlacement = `${y === "bottom" ? "top" : "bottom"}-${x === "left" ? "end" : "start"}`;
+    const menuMaxHeight = Math.max(distanceToTop, distanceToBottom) - 48;
 
     return (
-        <Menu id="myMenu">
+        <Menu id="myMenu" placement={menuPlacement}>
             <MenuToggle>
                 <Avatar
                     data-testid="avatar"

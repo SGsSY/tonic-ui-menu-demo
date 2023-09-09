@@ -1,4 +1,4 @@
-import getDistanceToScreenBorder from "../src/utils/getDistanceToScreenBorder";
+import getDistanceToScreenBorder from "../../src/utils/getDistanceToScreenBorder";
 
 describe("getDistanceToScreenBorder", () => {
     test("pass none dom parameter will return empty array", () => {

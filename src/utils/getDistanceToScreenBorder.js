@@ -1,3 +1,8 @@
+/**
+ * Get distance to screen border
+ * @param {HTMLElement} element
+ * @returns {Array} [distanceToTop, distanceToBottom, distanceToLeft, distanceToRight]ß
+ */
 const getDistanceToScreenBorder = (element) => {
     if (!element || !(element instanceof HTMLElement)) return [];
 
