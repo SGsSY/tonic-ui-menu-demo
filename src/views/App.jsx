@@ -38,6 +38,7 @@ const MyMenu = () => {
         <Menu>
             <MenuToggle>
                 <Avatar
+                    data-testid="avatar"
                     backgroundColor={colorStyle.background.secondary}
                     color={colorStyle.color.secondary}
                     _hover={{
