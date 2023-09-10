@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
     Box,
     Flex,
@@ -94,20 +95,29 @@ const MyMenu = () => {
                         <Icon icon="user-team" size="5x" />
                     </Avatar>
                 </MenuToggle>
-                <MenuList data-testid="menu-list" width="max-content" overflow="auto" maxHeight={menuMaxHeight}>
-                    <Box>
-                        {menuItems.map(({ icon, name }) => (
-                            <MenuItem key={name}>
-                                <Flex flex="none" mr="3x">
-                                    <Icon icon={icon} />
-                                </Flex>
-                                <Flex flex="auto">
-                                    <Text>{name}</Text>
-                                </Flex>
-                            </MenuItem>
-                        ))}
-                    </Box>
-                </MenuList>
+                {createPortal(
+                    <MenuList
+                        data-testid="menu-list"
+                        width="max-content"
+                        overflow="auto"
+                        maxHeight={menuMaxHeight}
+                        zIndex={Number.MAX_SAFE_INTEGER}
+                    >
+                        <Box>
+                            {menuItems.map(({ icon, name }) => (
+                                <MenuItem key={name}>
+                                    <Flex flex="none" mr="3x">
+                                        <Icon icon={icon} />
+                                    </Flex>
+                                    <Flex flex="auto">
+                                        <Text>{name}</Text>
+                                    </Flex>
+                                </MenuItem>
+                            ))}
+                        </Box>
+                    </MenuList>,
+                    document.body
+                )}
             </Menu>
         </div>
     );
