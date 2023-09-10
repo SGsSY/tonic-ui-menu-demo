@@ -21,5 +21,9 @@ describe("getRelativePositionOfPoint", () => {
         expect(bottomLeft).toEqual(["bottom", "left"]);
         const bottomRight = getRelativePositionOfPoint(100, 0, 100, 0);
         expect(bottomRight).toEqual(["bottom", "right"]);
+        const leftEqualToRight = getRelativePositionOfPoint(0, 100, 100, 100);
+        expect(leftEqualToRight).toEqual(["top", "left"]);
+        const topEqualToBottom = getRelativePositionOfPoint(100, 100, 0, 100);
+        expect(topEqualToBottom).toEqual(["top", "left"]);
     });
 });

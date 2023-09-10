@@ -10,7 +10,7 @@ const getRelativePositionOfPoint = (top, bottom, left, right) => {
     if (typeof top !== "number" || typeof bottom !== "number" || typeof left !== "number" || typeof right !== "number")
         return [];
 
-    return [top > bottom ? "bottom" : "top", right > left ? "left" : "right"];
+    return [top > bottom ? "bottom" : "top", left > right ? "right" : "left"];
 };
 
 export default getRelativePositionOfPoint;
